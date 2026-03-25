@@ -7,7 +7,7 @@ Feature: Actualización de datos de cuentas de usuario
   @smoke @happy-path
   Scenario: Actualizar datos de una cuenta existente con credenciales válidas
     # Crear cuenta con email único para este escenario
-    * def randomId = karate.random()
+    * def randomId = karate.uuid()
     * def testEmail = 'testput_' + randomId + '@mailinator.com'
     * def testPassword = 'P@ss_Put_' + randomId
     Given path '/api/createAccount'
@@ -101,3 +101,4 @@ Feature: Actualización de datos de cuentas de usuario
     When method put
     Then status 200
     And match response.responseCode == 404
+    And match response.message == 'Account not found!'
