@@ -9,7 +9,7 @@ applyTo: "src/test/**"
 | Componente | Versión mínima | Notas |
 |-----------|---------------|-------|
 | Java | 11 | Requerido por Karate 1.4.x |
-| Maven | 3.8 | Gestor de dependencias y ejecución |
+| Gradle | 8.5 | Gestor de dependencias y ejecución |
 | Karate | 1.4.1 | `com.intuit.karate:karate-junit5` |
 | JUnit 5 | 5.9 | Runner de Karate |
 
@@ -41,31 +41,50 @@ src/
 - Tags: `@smoke`, `@get`, `@post`, `@put`, `@delete`, `@happy-path`, `@error-path`
 - Idioma de las features: inglés para keywords Karate, español en comentarios/descripción
 
-## pom.xml — dependencias obligatorias
+## build.gradle — dependencias obligatorias
 
-```xml
-<dependency>
-    <groupId>com.intuit.karate</groupId>
-    <artifactId>karate-junit5</artifactId>
-    <version>1.4.1</version>
-    <scope>test</scope>
-</dependency>
-```
+```groovy
+plugins {
+    id 'java'
+}
 
-Plugin de ejecución:
-```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.1.2</version>
-</plugin>
+group = 'com.sofka.training'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'com.intuit.karate:karate-junit5:1.4.1'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'karate.options', System.properties.getProperty('karate.options')
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDir 'src/test/java'
+        }
+    }
+}
 ```
 
 ## Comando de ejecución
 
 ```bash
-mvn test                         # todos los escenarios
-mvn test -Dkarate.options="@smoke"   # solo tag smoke
+./gradlew test                                          # todos los escenarios
+./gradlew test -Dkarate.options="@smoke"                # solo tag smoke
 ```
 
 ## API bajo prueba

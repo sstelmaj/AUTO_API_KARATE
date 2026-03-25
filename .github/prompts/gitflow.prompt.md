@@ -1,31 +1,29 @@
 ---
 name: gitflow
-description: 'GitFlow completo para backend-notification-service: issue → rama → push → PR en GitHub Projects'
+description: 'GitFlow completo para AUTO_API_KARATE: issue → rama → push → PR en GitHub'
 ---
 
-# GitFlow Workflow — backend-notification-service
+# GitFlow Workflow — AUTO_API_KARATE
 
 Eres el agente **coder**. Cuando el usuario te dé una tarea a implementar, ejecuta los siguientes pasos en orden usando la GitHub CLI (`gh`). No saltes pasos.
 
 ## Contexto del repositorio
 
-- **Organización:** `equipo-6-uruguay`
-- **Repositorio:** `backend-notification-service`
-- **Repo completo:** `equipo-6-uruguay/backend-notification-service`
-- **Rama base para PRs:** `develop`
-- **GitHub Project:** `taller-semana-3` (project-level, compartido entre todos los repos del sistema de tickets)
+- **Usuario:** `sstelmaj`
+- **Repositorio:** `AUTO_API_KARATE`
+- **Repo completo:** `sstelmaj/AUTO_API_KARATE`
+- **URL:** `https://github.com/sstelmaj/AUTO_API_KARATE`
+- **Rama base para PRs:** `main`
 
 ---
 
 ## Paso 1 — Crear el Issue en el Project
 
 ```bash
-# Crear el issue en el repositorio Y asociarlo al project "taller-semana-3"
 gh issue create \
-  --repo equipo-6-uruguay/backend-notification-service \
+  --repo sstelmaj/AUTO_API_KARATE \
   --title "<TÍTULO_DE_LA_TAREA>" \
-  --body "<DESCRIPCIÓN_DETALLADA>" \
-  --project "taller-semana-3"
+  --body "<DESCRIPCIÓN_DETALLADA>"
 ```
 
 > Guarda el número de issue que devuelve el comando (ej: `#42`). Lo usarás en los pasos siguientes.
@@ -45,16 +43,16 @@ Usa el prefijo según el tipo de tarea:
 
 Formato del nombre de rama: `<tipo>/ISSUE-<n>-<descripcion-en-kebab-case>`
 
-Ejemplo: `feature/ISSUE-42-create-notification-from-ticket-created-use-case`
+Ejemplo: `feature/ISSUE-42-get-products-list-karate`
 
 ---
 
 ## Paso 3 — Crear y pushear la rama
 
 ```bash
-# Asegurarse de estar en develop actualizado
-git checkout develop
-git pull origin develop
+# Asegurarse de estar en main actualizado
+git checkout main
+git pull origin main
 
 # Crear la rama
 git checkout -b <nombre-de-rama>
@@ -69,8 +67,8 @@ git push -u origin <nombre-de-rama>
 
 ```bash
 gh pr create \
-  --repo equipo-6-uruguay/backend-notification-service \
-  --base develop \
+  --repo sstelmaj/AUTO_API_KARATE \
+  --base main \
   --head <nombre-de-rama> \
   --title "[ISSUE-<n>] <TÍTULO_DE_LA_TAREA>" \
   --body "## Descripción
@@ -80,12 +78,11 @@ gh pr create \
 Closes #<n>
 
 ## Checklist
-- [ ] Tests unitarios agregados/actualizados
-- [ ] Sin imports de otros servicios via ORM
-- [ ] Lógica de negocio en dominio o use cases (no en views/consumer)
-- [ ] Type hints en funciones públicas
-- [ ] Docstrings en funciones públicas" \
-  --project "taller-semana-3"
+- [ ] .feature file creado en `src/test/java/features/`
+- [ ] Happy path (@smoke) y error path cubiertos
+- [ ] Datos de prueba sintéticos (sin PII ni datos reales)
+- [ ] baseUrl referenciada desde karate-config.js (no hardcodeada)
+- [ ] Suite ejecuta correctamente con `./gradlew test`\"
 ```
 
 ---
@@ -100,20 +97,24 @@ Mientras trabajas en la rama, los commits deben seguir:
 
 Types válidos: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`
 
-Ejemplo: `feat(ISSUE-42): add CreateNotificationFromTicketCreatedUseCase`
+Ejemplos:
+- `feat(ISSUE-42): add get products list karate feature`
+- `test(ISSUE-43): add happy path and error path for POST createAccount`
+- `chore(ISSUE-44): configure karate-config.js baseUrl`
 
 ---
 
-## Reglas arquitectónicas a respetar al generar código
+## Reglas Karate a respetar al generar código
 
 Antes de escribir código, verifica:
 
-- ❌ NUNCA importar modelos de otro servicio
-- ❌ NUNCA escribir lógica de negocio en `api.py` ni en `consumer.py`
-- ✅ Nuevos event handlers → crear Use Case + Command, NO usar `Notification.objects.create()` directo
-- ✅ Dominio en `domain/` → Python puro, cero imports de Django
-- ✅ Type hints en funciones públicas y constructores
-- ✅ Docstrings en funciones públicas
+- ❌ NUNCA hardcodear `baseUrl` en un `.feature` — siempre via `karate-config.js`
+- ❌ NUNCA usar datos reales de producción ni PII en los escenarios
+- ✅ Un `.feature` por endpoint/operación HTTP (GET, POST, PUT, DELETE)
+- ✅ Cada `.feature` debe tener al menos `@smoke` (happy path) + `@error-path`
+- ✅ Datos de prueba sintéticos — usar `karate.random()` para emails únicos
+- ✅ Tags obligatorios: `@get`, `@post`, `@put` o `@delete` según el método
+- ✅ Leer `.github/instructions/tests.instructions.md` antes de crear cualquier archivo
 
 ---
 
@@ -124,13 +125,13 @@ Tarea recibida
      ↓
 gh issue create → obtener #n
      ↓
-git checkout develop && git pull
+git checkout main && git pull
      ↓
 git checkout -b <tipo>/ISSUE-<n>-<descripcion>
      ↓
 git push -u origin <rama>
      ↓
-gh pr create --base develop → asociar al project
+gh pr create --base main
      ↓
-Implementar código respetando DDD
+Implementar código Karate respetando tests.instructions.md
 ```

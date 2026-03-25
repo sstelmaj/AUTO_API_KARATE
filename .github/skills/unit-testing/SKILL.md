@@ -1,6 +1,6 @@
 ---
 name: unit-testing
-description: "Genera el proyecto Karate completo: pom.xml, karate-config.js, TestRunner.java y archivos .feature para los 4 métodos HTTP (GET, POST, PUT, DELETE) apuntando a la API automationexercise.com. Usar cuando el usuario pida implementar, generar o crear pruebas Karate, tests API o el proyecto de automatización."
+description: "Genera el proyecto Karate completo: build.gradle, karate-config.js, TestRunner.java y archivos .feature para los 4 métodos HTTP (GET, POST, PUT, DELETE) apuntando a la API automationexercise.com. Usar cuando el usuario pida implementar, generar o crear pruebas Karate, tests API o el proyecto de automatización."
 argument-hint: "<nombre-feature | all>"
 ---
 
@@ -19,59 +19,43 @@ Lee antes de generar cualquier archivo:
 
 ## Artefactos a generar
 
-### 1. `pom.xml` (raíz del proyecto)
+### 1. `build.gradle` (raíz del proyecto)
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+```groovy
+plugins {
+    id 'java'
+}
 
-    <groupId>com.sofka.training</groupId>
-    <artifactId>karate-api-tests</artifactId>
-    <version>1.0.0</version>
-    <packaging>jar</packaging>
+group = 'com.sofka.training'
+version = '1.0.0'
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <karate.version>1.4.1</karate.version>
-        <junit5.version>5.9.3</junit5.version>
-    </properties>
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
-    <dependencies>
-        <dependency>
-            <groupId>com.intuit.karate</groupId>
-            <artifactId>karate-junit5</artifactId>
-            <version>${karate.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+repositories {
+    mavenCentral()
+}
 
-    <build>
-        <testResources>
-            <testResource>
-                <directory>src/test/java</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <includes>
-                        <include>**/runners/*.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-</project>
+dependencies {
+    testImplementation 'com.intuit.karate:karate-junit5:1.4.1'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'karate.options', System.properties.getProperty('karate.options')
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDir 'src/test/java'
+        }
+    }
+}
 ```
 
 ### 2. `src/test/java/karate-config.js`
@@ -217,7 +201,7 @@ And match response ==
 
 ## Reglas de generación
 
-1. Generar TODOS los 4 archivos `.feature` + `pom.xml` + `karate-config.js` + `TestRunner.java`
+1. Generar TODOS los 4 archivos `.feature` + `build.gradle` + `karate-config.js` + `TestRunner.java`
 2. Cada `.feature` incluye mínimo: 1 happy-path (`@smoke`) + 1 error-path
 3. Datos de prueba: SIEMPRE sintéticos, usar `karate.random()` para emails únicos
 4. No hardcodear `baseUrl` — siempre via `karate-config.js`

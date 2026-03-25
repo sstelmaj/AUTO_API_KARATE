@@ -9,7 +9,7 @@ El objetivo es cubrir los 4 métodos HTTP principales apuntando a la API públic
 
 - **API bajo prueba**: https://automationexercise.com/api_list
 - **Framework**: [Karate DSL](https://github.com/karatelabs/karate)
-- **Stack**: Java 11+, Maven 3.8+, Karate 1.4.x, JUnit 5
+- **Stack**: Java 11+, Gradle 8.5+, Karate 1.4.x, JUnit 5
 
 ## Alcance — 4 escenarios obligatorios
 
@@ -24,7 +24,7 @@ El objetivo es cubrir los 4 métodos HTTP principales apuntando a la API públic
 
 - Cada escenario debe tener al menos un **happy path** (`@smoke`) y un **error path**
 - Los datos de prueba deben ser **sintéticos** (no datos reales)
-- El proyecto debe ejecutarse con `mvn test` sin errores de compilación
+- El proyecto debe ejecutarse con `./gradlew test` sin errores de compilación
 - El `baseUrl` debe estar centralizado en `karate-config.js`
 - Los `.feature` files deben seguir la convención de nombres definida en `tests.instructions.md`
 
@@ -43,5 +43,5 @@ El objetivo es cubrir los 4 métodos HTTP principales apuntando a la API públic
 [Tests]  → /unit-testing           → src/test/java/features/**/*.feature
                                      src/test/java/runners/TestRunner.java
                                      src/test/java/karate-config.js
-                                     pom.xml
+                                     build.gradle
 ```
