@@ -3,7 +3,7 @@ Feature: Creación de cuentas de usuario en la plataforma
 
   Background:
     * url baseUrl
-    * def randomId = karate.uuid()
+    * def randomId = Math.floor(Math.random() * 100000000) + ''
     * def testEmail = 'testpost_' + randomId + '@mailinator.com'
     * def testPassword = 'P@ss_Post_' + randomId
 

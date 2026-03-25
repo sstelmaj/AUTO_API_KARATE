@@ -7,7 +7,7 @@ Feature: Actualización de datos de cuentas de usuario
   @smoke @happy-path
   Scenario: Actualizar datos de una cuenta existente con credenciales válidas
     # Crear cuenta con email único para este escenario
-    * def randomId = karate.uuid()
+    * def randomId = Math.floor(Math.random() * 100000000) + ''
     * def testEmail = 'testput_' + randomId + '@mailinator.com'
     * def testPassword = 'P@ss_Put_' + randomId
     Given path '/api/createAccount'
