@@ -1,0 +1,32 @@
+# Build
+/build/
+/target/
+/out/
+
+# Gradle
+.gradle/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+logs/
+
+# Test reports
+karate-reports/
+reports/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+*.env
