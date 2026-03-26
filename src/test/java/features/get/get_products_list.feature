@@ -10,7 +10,7 @@ Feature: Consulta del catálogo de productos de la plataforma
     When method get
     Then status 200
     And match response.responseCode == 200
-    And match response.products == '#notempty'
+    And assert response.products.length > 0
 
   @edge-case
   Scenario: Verificar que cada producto contiene los campos obligatorios

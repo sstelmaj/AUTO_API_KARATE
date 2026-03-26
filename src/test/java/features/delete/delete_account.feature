@@ -6,8 +6,8 @@ Feature: Eliminación de cuentas de usuario de la plataforma
 
   @smoke @happy-path
   Scenario: Eliminar una cuenta de usuario existente con credenciales válidas
-    # Crear cuenta con email único para garantizar estado controlado (mitigación R-002)
-    * def randomId = karate.random()
+    # Crear cuenta con email único para garantizar estado controlado
+    * def randomId = Math.floor(Math.random() * 100000000) + ''
     * def testEmail = 'testdel_' + randomId + '@mailinator.com'
     * def testPassword = 'P@ss_Del_' + randomId
     Given path '/api/createAccount'
