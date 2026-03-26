@@ -101,3 +101,4 @@ Feature: Actualización de datos de cuentas de usuario
     When method put
     Then status 200
     And match response.responseCode == 404
+    And match response.message == 'Account not found!'
