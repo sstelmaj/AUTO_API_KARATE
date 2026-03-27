@@ -1,0 +1,17 @@
+{
+  "name": "Test Put User Updated",
+  "title": "Mr",
+  "birth_date": "20",
+  "birth_month": "July",
+  "birth_year": "1990",
+  "firstname": "Test Updated",
+  "lastname": "Put",
+  "company": "Sofka Training Updated",
+  "address1": "Avenida Siempreviva 742",
+  "address2": "",
+  "country": "Colombia",
+  "zipcode": "110222",
+  "state": "Antioquia",
+  "city": "Medellín",
+  "mobile_number": "3107654321"
+}

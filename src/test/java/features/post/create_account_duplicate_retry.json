@@ -1,0 +1,19 @@
+{
+  "name": "Test Duplicate User Again",
+  "email": "testdup_sofka_fixed@mailinator.com",
+  "password": "P@ss_Dup_Fixed_02",
+  "title": "Mr",
+  "birth_date": "10",
+  "birth_month": "March",
+  "birth_year": "1985",
+  "firstname": "Test",
+  "lastname": "Duplicate",
+  "company": "Sofka QA",
+  "address1": "Carrera 10 #20-30",
+  "address2": "",
+  "country": "Colombia",
+  "zipcode": "110333",
+  "state": "Antioquia",
+  "city": "Medellín",
+  "mobile_number": "3109876543"
+}

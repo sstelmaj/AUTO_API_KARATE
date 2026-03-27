@@ -10,24 +10,11 @@ Feature: Eliminación de cuentas de usuario de la plataforma
     * def randomId = Math.floor(Math.random() * 100000000) + ''
     * def testEmail = 'testdel_' + randomId + '@mailinator.com'
     * def testPassword = 'P@ss_Del_' + randomId
+    * def createPayload = read('create_account_for_delete.json')
+    * set createPayload.email = testEmail
+    * set createPayload.password = testPassword
     Given path '/api/createAccount'
-    And form field name = 'Test Delete User'
-    And form field email = testEmail
-    And form field password = testPassword
-    And form field title = 'Mr'
-    And form field birth_date = '10'
-    And form field birth_month = 'June'
-    And form field birth_year = '1990'
-    And form field firstname = 'Test'
-    And form field lastname = 'Delete'
-    And form field company = 'Sofka QA'
-    And form field address1 = 'Calle Test 123'
-    And form field address2 = ''
-    And form field country = 'Colombia'
-    And form field zipcode = '110111'
-    And form field state = 'Cundinamarca'
-    And form field city = 'Bogotá'
-    And form field mobile_number = '3001234567'
+    And form fields createPayload
     When method post
     Then status 200
     And match response.responseCode == 201
@@ -42,9 +29,9 @@ Feature: Eliminación de cuentas de usuario de la plataforma
 
   @error-path
   Scenario: Intentar eliminar cuenta con contraseña incorrecta
+    * def payload = read('delete_account_bad_password.json')
     Given path '/api/deleteAccount'
-    And form field email = 'testdel_badpass@mailinator.com'
-    And form field password = 'WRONG_PASS_DELETE'
+    And form fields payload
     When method delete
     Then status 200
     And match response.responseCode == 404
@@ -52,9 +39,9 @@ Feature: Eliminación de cuentas de usuario de la plataforma
 
   @edge-case
   Scenario: Intentar eliminar una cuenta con email que no existe
+    * def payload = read('delete_account_nonexistent.json')
     Given path '/api/deleteAccount'
-    And form field email = 'nonexistent_ghost_delete@mailinator.com'
-    And form field password = 'P@ss_Ghost_Del_00'
+    And form fields payload
     When method delete
     Then status 200
     And match response.responseCode == 404

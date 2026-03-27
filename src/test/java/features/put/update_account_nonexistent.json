@@ -1,0 +1,19 @@
+{
+  "name": "Ghost User",
+  "email": "nonexistent_ghost_put@mailinator.com",
+  "password": "P@ss_Ghost_00",
+  "title": "Ms",
+  "birth_date": "05",
+  "birth_month": "May",
+  "birth_year": "2000",
+  "firstname": "Ghost",
+  "lastname": "User",
+  "company": "Ghost Corp",
+  "address1": "Nowhere St 0",
+  "address2": "",
+  "country": "Colombia",
+  "zipcode": "999999",
+  "state": "Bogotá",
+  "city": "Bogotá",
+  "mobile_number": "3111111111"
+}

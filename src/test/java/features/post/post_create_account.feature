@@ -9,24 +9,11 @@ Feature: Creación de cuentas de usuario en la plataforma
 
   @smoke @happy-path
   Scenario: Crear una nueva cuenta de usuario con datos válidos
+    * def payload = read('create_account_valid.json')
+    * set payload.email = testEmail
+    * set payload.password = testPassword
     Given path '/api/createAccount'
-    And form field name = 'Test User Sofka'
-    And form field email = testEmail
-    And form field password = testPassword
-    And form field title = 'Mr'
-    And form field birth_date = '15'
-    And form field birth_month = 'June'
-    And form field birth_year = '1990'
-    And form field firstname = 'Test'
-    And form field lastname = 'Sofka'
-    And form field company = 'Sofka Training'
-    And form field address1 = 'Calle Falsa 123'
-    And form field address2 = ''
-    And form field country = 'Colombia'
-    And form field zipcode = '110111'
-    And form field state = 'Cundinamarca'
-    And form field city = 'Bogotá'
-    And form field mobile_number = '3001234567'
+    And form fields payload
     When method post
     Then status 200
     And match response.responseCode == 201
@@ -35,44 +22,14 @@ Feature: Creación de cuentas de usuario en la plataforma
   @error-path
   Scenario: Intentar crear una cuenta con un email ya registrado
     # Paso 1: crear la cuenta con email fijo (puede que ya exista de runs anteriores)
+    * def firstAttempt = read('create_account_duplicate.json')
     Given path '/api/createAccount'
-    And form field name = 'Test Duplicate User'
-    And form field email = 'testdup_sofka_fixed@mailinator.com'
-    And form field password = 'P@ss_Dup_Fixed_01'
-    And form field title = 'Mr'
-    And form field birth_date = '10'
-    And form field birth_month = 'March'
-    And form field birth_year = '1985'
-    And form field firstname = 'Test'
-    And form field lastname = 'Duplicate'
-    And form field company = 'Sofka QA'
-    And form field address1 = 'Carrera 10 #20-30'
-    And form field address2 = ''
-    And form field country = 'Colombia'
-    And form field zipcode = '110333'
-    And form field state = 'Antioquia'
-    And form field city = 'Medellín'
-    And form field mobile_number = '3109876543'
+    And form fields firstAttempt
     When method post
     # Paso 2: intentar crear con el mismo email — debe retornar 400
+    * def secondAttempt = read('create_account_duplicate_retry.json')
     Given path '/api/createAccount'
-    And form field name = 'Test Duplicate User Again'
-    And form field email = 'testdup_sofka_fixed@mailinator.com'
-    And form field password = 'P@ss_Dup_Fixed_02'
-    And form field title = 'Mr'
-    And form field birth_date = '10'
-    And form field birth_month = 'March'
-    And form field birth_year = '1985'
-    And form field firstname = 'Test'
-    And form field lastname = 'Duplicate'
-    And form field company = 'Sofka QA'
-    And form field address1 = 'Carrera 10 #20-30'
-    And form field address2 = ''
-    And form field country = 'Colombia'
-    And form field zipcode = '110333'
-    And form field state = 'Antioquia'
-    And form field city = 'Medellín'
-    And form field mobile_number = '3109876543'
+    And form fields secondAttempt
     When method post
     Then status 200
     And match response.responseCode == 400
@@ -80,9 +37,9 @@ Feature: Creación de cuentas de usuario en la plataforma
 
   @edge-case
   Scenario: Intentar crear cuenta sin campo email
+    * def payload = read('create_account_no_email.json')
     Given path '/api/createAccount'
-    And form field name = 'Test No Email'
-    And form field password = 'P@ss_Edge_01'
+    And form fields payload
     When method post
     Then status 200
     And match response.responseCode != 201

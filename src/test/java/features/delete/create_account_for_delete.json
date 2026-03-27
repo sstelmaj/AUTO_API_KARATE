@@ -1,0 +1,17 @@
+{
+  "name": "Test Delete User",
+  "title": "Mr",
+  "birth_date": "10",
+  "birth_month": "June",
+  "birth_year": "1990",
+  "firstname": "Test",
+  "lastname": "Delete",
+  "company": "Sofka QA",
+  "address1": "Calle Test 123",
+  "address2": "",
+  "country": "Colombia",
+  "zipcode": "110111",
+  "state": "Cundinamarca",
+  "city": "Bogotá",
+  "mobile_number": "3001234567"
+}
