@@ -24,6 +24,7 @@ test {
     systemProperty 'karate.options', System.properties.getProperty('karate.options')
     testClassesDirs = sourceSets.test.output.classesDirs
     classpath = sourceSets.test.runtimeClasspath
+    outputs.upToDateWhen { false }  // siempre ejecuta los tests, sin caché
 }
 
 sourceSets {
