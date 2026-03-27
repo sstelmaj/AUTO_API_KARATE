@@ -12,6 +12,9 @@
 *.war
 *.ear
 
+# Gradle Wrapper jar must be tracked (exception to *.jar rule above)
+!gradle/wrapper/gradle-wrapper.jar
+
 # Logs
 *.log
 logs/
