@@ -134,4 +134,4 @@ Abre ese archivo en cualquier navegador para ver el detalle de cada escenario.
 
 ## Tiempo de ejecución
 
-La suite completa (24 escenarios) se ejecuta en menos de 30 segundos.
+La suite completa (12 escenarios, 4 features) se ejecuta en menos de 30 segundos.
