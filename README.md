@@ -135,3 +135,8 @@ Abre ese archivo en cualquier navegador para ver el detalle de cada escenario.
 ## Tiempo de ejecución
 
 La suite completa (24 escenarios) se ejecuta en menos de 30 segundos.
+
+## Captura de pantalla del reporte ejecutando la suit completa
+
+<img width="1908" height="368" alt="image" src="https://github.com/user-attachments/assets/c6edbc32-e514-4b7e-98c2-a8b0b10eb4fb" />
+
