@@ -91,16 +91,16 @@ cd AUTO_API_KARATE
 
 ```bash
 # Solo tests GET
-.\gradlew.bat test --tests "runners.TestRunner.testGet"
+.\gradlew.bat test -Dkarate.options="classpath:features/get"
 
 # Solo tests POST
-.\gradlew.bat test --tests "runners.TestRunner.testPost"
+.\gradlew.bat test -Dkarate.options="classpath:features/post"
 
 # Solo tests PUT
-.\gradlew.bat test --tests "runners.TestRunner.testPut"
+.\gradlew.bat test -Dkarate.options="classpath:features/put"
 
 # Solo tests DELETE
-.\gradlew.bat test --tests "runners.TestRunner.testDelete"
+.\gradlew.bat test -Dkarate.options="classpath:features/delete"
 ```
 
 ### 4. Ejecutar por tag (opcional)
