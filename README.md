@@ -91,30 +91,32 @@ cd AUTO_API_KARATE
 
 ```bash
 # Solo tests GET
-.\gradlew.bat test -Dkarate.options="classpath:features/get"
+.\gradlew.bat test "-Dkarate.options=classpath:features/get"
 
 # Solo tests POST
-.\gradlew.bat test -Dkarate.options="classpath:features/post"
+.\gradlew.bat test "-Dkarate.options=classpath:features/post"
 
 # Solo tests PUT
-.\gradlew.bat test -Dkarate.options="classpath:features/put"
+.\gradlew.bat test "-Dkarate.options=classpath:features/put"
 
 # Solo tests DELETE
-.\gradlew.bat test -Dkarate.options="classpath:features/delete"
+.\gradlew.bat test "-Dkarate.options=classpath:features/delete"
 ```
 
 ### 4. Ejecutar por tag (opcional)
 
 ```bash
 # Solo escenarios smoke
-.\gradlew.bat test -Dkarate.options="--tags @smoke"
+.\gradlew.bat test "-Dkarate.options=--tags @smoke"
 
 # Solo happy path
-.\gradlew.bat test -Dkarate.options="--tags @happy-path"
+.\gradlew.bat test "-Dkarate.options=--tags @happy-path"
 
 # Solo error path
-.\gradlew.bat test -Dkarate.options="--tags @error-path"
+.\gradlew.bat test "-Dkarate.options=--tags @error-path"
 ```
+
+> **PowerShell:** el argumento `-Dkarate.options` debe ir entre comillas dobles completas (`"..."`) para evitar que PowerShell interprete el punto como operador de método.
 
 ---
 
